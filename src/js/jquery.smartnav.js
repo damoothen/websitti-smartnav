@@ -15,6 +15,7 @@
             var $menu = $(this);
             var $links = $(params.linksSelector, $menu);
             var $window = $(window);
+            var $document = $(document);
             var sections = [];
             var id = null;
             var scrollId = null;
@@ -44,10 +45,32 @@
             $window.scroll(function (e) {
                 var scrollTop = $window.scrollTop();
                 var $s = null;
-                for (var i in sections) {
-                    $s = $(sections[i]);
-                    if (scrollTop > $s.offset().top - $window.height() / 2)
-                        scrollId = sections[i];
+
+                // Special case: top of document is reached
+                if (scrollTop === 0) {
+
+                    // Check that first link is at top
+                    $s = $(sections[0]);
+                    if ($s.offset().top === 0)
+                        scrollId = sections[0];
+
+                }
+
+                // Special case: bottom of document is reached
+                else if (scrollTop + $window.height() >= $document.height()) {
+                    $s = $(sections[sections.length - 1]);
+                    if ($s.offset().top + $s.outerHeight() >= $document.height())
+                        scrollId = sections[sections.length - 1];
+                }
+
+                // Normal use case
+                else {
+                    for (var i in sections) {
+                        $s = $(sections[i]);
+                        if (scrollTop > $s.offset().top - $window.height() / 2)
+                            scrollId = sections[i];
+                    }
+
                 }
 
                 if (id !== scrollId) {
@@ -56,6 +79,7 @@
                     $('a[href=' + id + ']', $menu).addClass(params.selectClass);
                     updateHistory(id);
                 }
+
 
             });
 
