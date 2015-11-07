@@ -15,10 +15,17 @@
             var sections = [];
             var id = null;
             var scrollId = null;
-            $links.each(function (i, link) {
-                sections.push($(link).attr('href'));
-            });
 
+            // Get sections of page
+            $links.each(function (i, link) {
+
+                // Ignore non anchar links and default anchor '#'
+                var href = $(this).attr('href');
+                if (href.charAt(0) === '#' && href.length > 1)
+                    sections.push(href);
+            });
+            
+            // Auto scroll
             $window.scroll(function (e) {
                 var scrollTop = $window.scrollTop();
                 var $s = null;
@@ -36,6 +43,7 @@
 
             });
 
+            // Smooth scroll
             $links.click(function (e) {
                 e.preventDefault();
 
