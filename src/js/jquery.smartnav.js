@@ -4,7 +4,8 @@
 
         var defaults = {
             duration: 1000,
-            updateHistory: true
+            updateHistory: true,
+            selectClass: 'selected'
         };
 
         params = $.extend({}, defaults, params);
@@ -50,8 +51,8 @@
 
                 if (id !== scrollId) {
                     id = scrollId;
-                    $links.removeClass('selected');
-                    $('a[href=' + id + ']', $menu).addClass('selected');
+                    $links.removeClass(params.selectClass);
+                    $('a[href=' + id + ']', $menu).addClass(params.selectClass);
                     updateHistory(id);
                 }
 
