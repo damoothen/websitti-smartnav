@@ -13,7 +13,7 @@ module.exports = function (grunt) {
         uglify: {
             min: {
                 files: {
-                    'dist/js/jquery.ws.smoothscroll.min.js': ['src/js/jquery.ws.smoothscroll.js']
+                    'dist/js/jquery.smartnav.min.js': ['src/js/jquery.smartnav.js']
                 }
             }
         },

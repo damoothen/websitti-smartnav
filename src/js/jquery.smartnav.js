@@ -1,6 +1,6 @@
 (function($){
 
-    $.fn.smoothscroll = function(params){
+    $.fn.smartnav = function(params){
         
         var defaults = {
             duration: 1000
