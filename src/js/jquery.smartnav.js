@@ -3,7 +3,8 @@
     $.fn.smartnav = function (params) {
 
         var defaults = {
-            duration: 1000
+            duration: 1000,
+            updateHistory: true
         };
 
         params = $.extend({}, defaults, params);
@@ -16,6 +17,18 @@
             var id = null;
             var scrollId = null;
 
+            // Update history
+            var updateHistory = function (id) {
+                if (params.updateHistory) {
+                    // Update browse url and history
+                    if (history.pushState) {
+                        history.pushState(null, null, id);
+                    } else {
+                        location.hash = id;
+                    }
+                }
+            };
+
             // Get sections of page
             $links.each(function (i, link) {
 
@@ -24,7 +37,7 @@
                 if (href.charAt(0) === '#' && href.length > 1)
                     sections.push(href);
             });
-            
+
             // Auto scroll
             $window.scroll(function (e) {
                 var scrollTop = $window.scrollTop();
@@ -39,6 +52,7 @@
                     id = scrollId;
                     $links.removeClass('selected');
                     $('a[href=' + id + ']', $menu).addClass('selected');
+                    updateHistory(id);
                 }
 
             });
@@ -48,7 +62,7 @@
                 e.preventDefault();
 
                 var to = 0;
-                var id = $(this).attr('href');
+                id = $(this).attr('href');
 
                 // If no href then stop
                 // If id isn't an anchor then stop
@@ -63,12 +77,8 @@
                     scrollTop: to
                 }, params.duration);
 
-                // Update browse url and history
-                if (history.pushState) {
-                    history.pushState(null, null, id);
-                } else {
-                    location.hash = id;
-                }
+                updateHistory(id);
+
             });
         });
     };
