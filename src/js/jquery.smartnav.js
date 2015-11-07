@@ -31,6 +31,10 @@
                     }
                 }
             };
+            
+            // Select first link on startup
+            $links.removeClass(params.selectClass);
+            $($links.get(0)).addClass(params.selectClass);
 
             // Get sections of page
             $links.each(function (i, link) {
