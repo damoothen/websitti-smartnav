@@ -3,15 +3,17 @@
     $.fn.smartnav = function (params) {
 
         var defaults = {
+            linksSelector: 'a',
             duration: 1000,
-            updateHistory: true
+            updateHistory: true,
+            selectClass: 'selected'
         };
 
         params = $.extend({}, defaults, params);
 
         return this.each(function (element) {
             var $menu = $(this);
-            var $links = $('a', $menu);
+            var $links = $(params.linksSelector, $menu);
             var $window = $(window);
             var sections = [];
             var id = null;
@@ -50,8 +52,8 @@
 
                 if (id !== scrollId) {
                     id = scrollId;
-                    $links.removeClass('selected');
-                    $('a[href=' + id + ']', $menu).addClass('selected');
+                    $links.removeClass(params.selectClass);
+                    $('a[href=' + id + ']', $menu).addClass(params.selectClass);
                     updateHistory(id);
                 }
 
