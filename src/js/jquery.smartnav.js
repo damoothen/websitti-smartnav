@@ -3,6 +3,7 @@
     $.fn.smartnav = function (params) {
 
         var defaults = {
+            linksSelector: 'a',
             duration: 1000,
             updateHistory: true,
             selectClass: 'selected'
@@ -12,7 +13,7 @@
 
         return this.each(function (element) {
             var $menu = $(this);
-            var $links = $('a', $menu);
+            var $links = $(params.linksSelector, $menu);
             var $window = $(window);
             var sections = [];
             var id = null;
