@@ -1,9 +1,9 @@
 {
-  "name": "smartnav",
+  "name": "websitti-smartnav",
   "authors": [
     "David Moothen <dmoothen@websitti.fr>"
   ],
-  "description": "Enable smooth scroll for navigation menu.",
+  "description": "Enable smooth scroll and autoscroll for navigation menu.",
   "main": "",
   "moduleType": [],
   "license": "MIT",
