@@ -31,7 +31,7 @@
                     }
                 }
             };
-            
+
             // Select first link on startup
             $links.removeClass(params.selectClass);
             $($links.get(0)).addClass(params.selectClass);
@@ -41,8 +41,9 @@
 
                 // Ignore non anchar links and default anchor '#'
                 var href = $(this).attr('href');
-                if (href.charAt(0) === '#' && href.length > 1)
+                if (href.charAt(0) === '#') {
                     sections.push(href);
+                }
             });
 
             // Auto scroll
@@ -54,7 +55,10 @@
                 if (scrollTop === 0) {
 
                     // Check that first link is at top
-                    $s = $(sections[0]);
+                    if (sections[0] === '#')
+                        $s = $('body');
+                    else
+                        $s = $(sections[0]);
                     if ($s.offset().top === 0)
                         scrollId = sections[0];
 
@@ -70,7 +74,10 @@
                 // Normal use case
                 else {
                     for (var i in sections) {
-                        $s = $(sections[i]);
+                        if (sections[i] === '#')
+                            $s = $('body');
+                        else
+                            $s = $(sections[i]);
                         if (scrollTop > $s.offset().top - $window.height() / 2)
                             scrollId = sections[i];
                     }
