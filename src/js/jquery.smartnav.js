@@ -112,7 +112,7 @@
                     to = $(id).offset().top;
 
                 $('html,body').animate({
-                    scrollTop: to + params.offsetTop
+                    scrollTop: to - params.offsetTop
                 }, params.duration);
 
                 updateHistory(id);
