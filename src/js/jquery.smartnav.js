@@ -6,7 +6,8 @@
             linksSelector: 'a',
             duration: 1000,
             updateHistory: true,
-            selectClass: 'selected'
+            selectClass: 'selected',
+            offsetTop: 0
         };
 
         params = $.extend({}, defaults, params);
@@ -111,7 +112,7 @@
                     to = $(id).offset().top;
 
                 $('html,body').animate({
-                    scrollTop: to
+                    scrollTop: to + params.offsetTop
                 }, params.duration);
 
                 updateHistory(id);
