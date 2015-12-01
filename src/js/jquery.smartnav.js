@@ -117,13 +117,13 @@
                         to = $(id).position().top;
                     }
                     else {
-                        to = $(id).offset().top - params.offsetTop;
+                        to = $(id).offset().top;
                     }
                 }
 
                 var $tmp = params.reference ? $reference : $('body,html');
                 $tmp.animate({
-                    scrollTop: to
+                    scrollTop: to - params.offsetTop
                 }, params.duration);
 
                 updateHistory(id);
