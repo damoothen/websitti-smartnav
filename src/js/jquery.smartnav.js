@@ -7,7 +7,8 @@
             duration: 1000,
             updateHistory: true,
             selectClass: 'selected',
-            offsetTop: 0
+            offsetTop: 0,
+            reference: null
         };
 
         params = $.extend({}, defaults, params);
@@ -17,6 +18,7 @@
             var $links = $(params.linksSelector, $menu);
             var $window = $(window);
             var $document = $(document);
+            var $reference = params.reference !== null ? $(params.reference) : $(window);
             var sections = [];
             var id = null;
             var scrollId = null;
@@ -48,8 +50,8 @@
             });
 
             // Auto scroll
-            $window.scroll(function (e) {
-                var scrollTop = $window.scrollTop();
+            $reference.scroll(function (e) {
+                var scrollTop = $reference.scrollTop();
                 var $s = null;
 
                 // Special case: top of document is reached
@@ -66,7 +68,7 @@
                 }
 
                 // Special case: bottom of document is reached
-                else if (scrollTop + $window.height() >= $document.height()) {
+                else if (!params.reference && scrollTop + $reference.height() >= $document.height()) {
                     $s = $(sections[sections.length - 1]);
                     if ($s.offset().top + $s.outerHeight() >= $document.height())
                         scrollId = sections[sections.length - 1];
@@ -79,7 +81,9 @@
                             $s = $('body');
                         else
                             $s = $(sections[i]);
-                        if (scrollTop > $s.offset().top - $window.height() / 2)
+
+                        var t = params.reference ? $s.position().top : $s.offset().top;
+                        if (scrollTop > t - $window.height() / 2)
                             scrollId = sections[i];
                     }
 
@@ -108,11 +112,18 @@
                     return false;
 
                 // id is an anchor, if id is found then go to top offset
-                if (id !== '#')
-                    to = $(id).offset().top;
+                if (id !== '#') {
+                    if (params.reference) {
+                        to = $(id).position().top;
+                    }
+                    else {
+                        to = $(id).offset().top - params.offsetTop;
+                    }
+                }
 
-                $('html,body').animate({
-                    scrollTop: to - params.offsetTop
+                var $tmp = params.reference ? $reference : $('body,html');
+                $tmp.animate({
+                    scrollTop: to
                 }, params.duration);
 
                 updateHistory(id);
