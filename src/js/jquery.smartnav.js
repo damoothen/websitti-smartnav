@@ -92,7 +92,7 @@
                 if (id !== scrollId) {
                     id = scrollId;
                     $links.removeClass(params.selectClass);
-                    $('a[href=' + id + ']', $menu).addClass(params.selectClass);
+                    $('a[href="' + id + '"]', $menu).addClass(params.selectClass);
                     updateHistory(id);
                 }
 
